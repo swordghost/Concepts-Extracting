@@ -56,7 +56,7 @@ int main() {
 	srand((unsigned)time(0));
 	Concept *C; // 概念数组
 	Entity *E; // 实体数组
-	int ECount; // 总实体数量（包括同名不同概）
+	int ECount = 0; // 总实体数量（包括同名不同概）
 	char Num[11];
 	unsigned RandNum;
 	ofstream tfout;
