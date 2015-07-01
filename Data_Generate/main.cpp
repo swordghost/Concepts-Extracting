@@ -16,7 +16,7 @@ int NoC, NoE, NoQ; // 总概念数、总实体数、总查询数
 class Concept{
 public:
 	unsigned id;
-	int E[UPBOUND];
+	int E[2 * UPBOUND];
 	int length, i;
 	Concept():i(0) {
 	}
@@ -24,13 +24,17 @@ public:
 	}
 	unsigned init(unsigned _id) {
 		id = _id;
-		length = id % NoE;
+		length = id % min(NoE, UPBOUND);
 		if (length <= 0)
 			length = 1;
 		return id;
 	}
-	void add(int e) {
-		E[i++] = e;
+	bool add(int e) {
+		if (i < 2 * UPBOUND) {
+			E[i++] = e;
+			return true;
+		}
+		return false;
 	}
 };
 
@@ -121,12 +125,12 @@ int main() {
 	qn = "D:\\CEData\\" + qn + "Qry.dat";
 	string tn = Num;
 	tn = "D:\\CEData\\" + tn + "Tre.dat";
-	cout << qn << " " << tn << endl;
 
 	// 文档生成
 	for (int i = 0; i < NoC; ++i) {
 		int ReferCount = 0;
 		RandNum = (unsigned)(rand() % NoE);
+		cout << i << ':' << C[i].length << '\r';
 		while (ReferCount < C[i].length) {
 			RandNum = (RandNum + (unsigned)(1 + rand() % (NoE - 2))) % NoE;
 			if (E[RandNum].check(i)) {
@@ -136,12 +140,16 @@ int main() {
 		}
 	}
 	for (int i = 0; i < NoE; ++i) {
+		int cnt = 0;
 		if (E[i].check(0)) {
 			RandNum = (unsigned)(rand() % NoC);
-			C[RandNum].add(i);
-			C[(RandNum + (unsigned)(1 + rand() % (NoC - 2))) % NoC].add(i);
+			while (cnt < 2) {
+				cnt += C[RandNum].add(i);
+				RandNum = (RandNum + (unsigned)(1 + rand() % (NoC - 2))) % NoC;
+			}
 		}
 	}
+	cout << "文档生成完毕" << endl;
 
 	// 文档输出
 	tfout.open(dn);
@@ -153,6 +161,7 @@ int main() {
 		tfout << endl;
 	}
 	tfout.close();
+	cout << "文档输出完毕" << endl;
 
 	// 查询生成
 	//tfout.open(qn);
