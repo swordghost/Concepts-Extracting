@@ -68,14 +68,14 @@ int main() {
 	// 输入
 	printf("请依次输入总概念数、总实体数和总查询数：");
 	cin >> NoC;
-	while (NoC <= 0) {
-		printf("总概念数必须大于0！重新输入：");
+	while (NoC <= 2) {
+		printf("总概念数必须大于2！重新输入：");
 		cin >> NoC;
 	}
 	printf("随机生成总概念数：%d\n", NoC);
 	cin >> NoE;
-	while (NoE <= 0) {
-		printf("总实体数必须大于0！重新输入：");
+	while (NoE <= 2) {
+		printf("总实体数必须大于2！重新输入：");
 		cin >> NoE;
 	}
 	printf("随机生成总实体数：%d\n", NoE);
@@ -88,7 +88,7 @@ int main() {
 
 	// 概念生成
 	C = new Concept[NoC];
-	RandNum = (unsigned)rand();
+	RandNum = 0;
 	printf("生成概念：\n");
 	for (int i = 0; i < NoC; ++i)
 		printf("C%u\n", C[i].init(RandNum += (unsigned)rand() % NoC + 1));
@@ -96,7 +96,7 @@ int main() {
 
 	// 实体生成
 	E = new Entity[NoE];
-	RandNum = (unsigned)rand();
+	RandNum = 0;
 	printf("生成实体：\n");
 	for (int i = 0; i < NoE; ++i)
 		printf("E%u\n", E[i].init(RandNum += (unsigned)rand() % NoC + 1));
@@ -129,7 +129,6 @@ int main() {
 	// 文档生成
 	for (int i = 0; i < NoC; ++i) {
 		int ReferCount = 0;
-		RandNum = (unsigned)(rand() % NoE);
 		cout << i << ':' << C[i].length << '\r';
 		while (ReferCount < C[i].length) {
 			RandNum = (RandNum + (unsigned)(1 + rand() % (NoE - 2))) % NoE;
@@ -142,7 +141,6 @@ int main() {
 	for (int i = 0; i < NoE; ++i) {
 		int cnt = 0;
 		if (E[i].check(0)) {
-			RandNum = (unsigned)(rand() % NoC);
 			while (cnt < 2) {
 				cnt += C[RandNum].add(i);
 				RandNum = (RandNum + (unsigned)(1 + rand() % (NoC - 2))) % NoC;
@@ -164,12 +162,29 @@ int main() {
 	cout << "文档输出完毕" << endl;
 
 	// 查询生成
-	//tfout.open(qn);
-	//for (int i = 0; i < NoE; ++i)
-	//	E[i].LastRefer = -1;
-	//for (int i = 0; i < NoC; ++i) {
-	//	int q = 
-	//}
+	tfout.open(qn);
+	for (int i = 0; i < NoE; ++i)
+		E[i].LastRefer = -1;
+	for (int i = 0; i < NoC; ++i) {
+		int q = C[i].i * NoQ / ECount;
+		NoQ -= q;
+		ECount -= C[i].i;
+		int ReferCount = 0;
+		cout << i << ':' << q << '\r';
+		while (ReferCount < q) {
+			RandNum = (RandNum + (unsigned)(1 + (C[i].i>2 ? rand() % (C[i].i - 2) : 0))) % C[i].i;
+			if (E[C[i].E[RandNum]].check(i)) {
+				tfout << 'C' << C[i].id << "\tE" << E[C[i].E[RandNum]].id << endl;
+				ReferCount++;
+			}
+		}
+	}
+	tfout.close();
+	cout << "查询输出完毕" << endl;
+
+	// 树结构生成
+	tfout.open(tn);
+	tfout.close();
 
 	// 清理内存
 	//delete C;
