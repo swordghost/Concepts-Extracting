@@ -7,16 +7,22 @@
 #include <ctime>
 #include <cmath>
 
+#include <Vector>
+
 using namespace std;
 
-#define UPBOUND 50
+#define EPCUPBOUND 50
+#define TREEUPBOUND1 3
+#define TREEUPBOUND2 10
+#define FEWNODESPRO 3
 
 int NoC, NoE, NoQ; // 总概念数、总实体数、总查询数
+char* path = "D:\\CEData\\";
 
 class Concept{
 public:
 	unsigned id;
-	int E[2 * UPBOUND];
+	int E[2 * EPCUPBOUND];
 	int length, i;
 	Concept():i(0) {
 	}
@@ -24,13 +30,13 @@ public:
 	}
 	unsigned init(unsigned _id) {
 		id = _id;
-		length = id % min(NoE, UPBOUND);
+		length = id % min(NoE, EPCUPBOUND);
 		if (length <= 0)
 			length = 1;
 		return id;
 	}
 	bool add(int e) {
-		if (i < 2 * UPBOUND) {
+		if (i < 2 * EPCUPBOUND) {
 			E[i++] = e;
 			return true;
 		}
@@ -59,6 +65,7 @@ public:
 int main() {
 	srand((unsigned)time(0));
 	Concept *C; // 概念数组
+	int *Tree; // 树结构数组，只给出了每个节点的父节点
 	Entity *E; // 实体数组
 	int ECount = 0; // 总实体数量（包括同名不同概）
 	char Num[11];
@@ -106,7 +113,7 @@ int main() {
 	unsigned temp = (unsigned)rand();
 	_itoa_s((int)temp, Num, 10);
 	string dn(Num);
-	dn = "D:\\CEData\\" + dn + "Doc.dat";
+	dn = path + dn + "Doc.dat";
 	while (1) {
 		ifstream tfin(dn);
 		if (!tfin) {
@@ -116,15 +123,15 @@ int main() {
 		temp = (unsigned)rand();
 		_itoa_s((int)temp, Num, 10);
 		dn = Num;
-		dn = "D:\\CEData\\" + dn + "Doc.dat";
+		dn = path + dn + "Doc.dat";
 		tfin.close();
 	}
 
 	// 文件名定义
 	string qn = Num;
-	qn = "D:\\CEData\\" + qn + "Qry.dat";
+	qn = path + qn + "Qry.dat";
 	string tn = Num;
-	tn = "D:\\CEData\\" + tn + "Tre.dat";
+	tn = path + tn + "Tre.dat";
 
 	// 文档生成
 	for (int i = 0; i < NoC; ++i) {
@@ -142,8 +149,8 @@ int main() {
 		int cnt = 0;
 		if (E[i].check(0)) {
 			while (cnt < 2) {
-				cnt += C[RandNum].add(i);
 				RandNum = (RandNum + (unsigned)(1 + rand() % (NoC - 2))) % NoC;
+				cnt += C[RandNum].add(i);
 			}
 		}
 	}
@@ -183,10 +190,40 @@ int main() {
 	cout << "查询输出完毕" << endl;
 
 	// 树结构生成
+	Tree = new int[2 * NoC];
+	int pt = NoC;
+	vector<int> _v;
+	for (int i = 0; i < NoC; ++i) {
+		Tree[i] = i;
+		_v.push_back(i);
+	}
+	int r;
+	while(_v.size() != 1) {
+		cout << _v.size() << '\r';
+		if ((unsigned)rand() % FEWNODESPRO < FEWNODESPRO - 1)
+			r = min((unsigned)rand() % TREEUPBOUND1 + 2, _v.size()); // 合并TREEUPBOUND1个及以下节点
+		else
+			r = min((unsigned)rand() % TREEUPBOUND2 + 2, _v.size()); // 合并TREEUPBOUND2个及以下节点
+		for (int j = 0; j < r; ++j) {
+			RandNum = (unsigned)rand() % _v.size();
+			Tree[_v[RandNum]] = pt;
+			_v.erase(_v.begin() + RandNum);
+		}
+		_v.push_back(pt);
+		Tree[pt++] = pt - 1;
+	}
+	_v.clear();
+
+	// 树结构输出
 	tfout.open(tn);
+	for (int i = 0; i < pt; ++i) {
+		tfout << i << '\t' << Tree[i] << endl;
+	}
 	tfout.close();
+	cout << "树结构输出完毕" << endl;
 
 	// 清理内存
+	delete Tree;
 	//delete C;
 	//delete E;
 
