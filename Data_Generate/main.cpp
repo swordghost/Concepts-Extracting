@@ -17,7 +17,7 @@ using namespace std;
 #define FEWNODESPRO 3
 
 int NoC, NoE, NoQ; // 总概念数、总实体数、总查询数
-char* path = "D:\\CEData\\";
+char *path = "D:\\CEData\\"; // 随机数据生成文件夹
 
 class Concept{
 public:
