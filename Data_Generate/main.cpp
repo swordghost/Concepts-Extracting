@@ -140,12 +140,14 @@ int main() {
 
 	// 概念输出
 	tfout.open(cn);
+	tfout << NoC << endl;
 	for (int i = 0; i < NoC; ++i)
 		tfout << i << "\tC" << C[i].id << endl;
 	tfout.close();
 
 	// 实体输出
 	tfout.open(en);
+	tfout << NoE << endl;
 	for (int i = 0; i < NoE; ++i)
 		tfout << i << "\tE" << E[i].id << endl;
 	tfout.close();
@@ -175,6 +177,7 @@ int main() {
 
 	// 文档输出
 	tfout.open(dn);
+	tfout << NoC << endl;
 	for (int i = 0; i < NoC; ++i) {
 		tfout << i;
 		ECount += C[i].i;
@@ -187,6 +190,7 @@ int main() {
 
 	// 查询生成
 	tfout.open(qn);
+	tfout << NoQ << endl;
 	for (int i = 0; i < NoE; ++i)
 		E[i].LastRefer = -1;
 	for (int i = 0; i < NoC; ++i) {
@@ -233,6 +237,7 @@ int main() {
 
 	// 树结构输出
 	tfout.open(tn);
+	tfout << NoC << endl << pt << endl;
 	for (int i = 0; i < pt; ++i) {
 		if (i == pt - 1)
 			RandNum = 0;
