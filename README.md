@@ -1,5 +1,4 @@
 # Concepts-Extracting
-
 2015北大信科数据库实验班创新项目。
 
 主要目标是对sigmod14论文《Which Concepts Are Worth Extracting》中描述的算法进行分析和重现，并尝试改进。

@@ -15,6 +15,7 @@ using namespace std;
 #define TREEUPBOUND1 3
 #define TREEUPBOUND2 10
 #define FEWNODESPRO 3
+#define COST 100
 
 int NoC, NoE, NoQ; // 总概念数、总实体数、总查询数
 char *path = "D:\\CEData\\"; // 随机数据生成文件夹
@@ -217,7 +218,11 @@ int main() {
 	// 树结构输出
 	tfout.open(tn);
 	for (int i = 0; i < pt; ++i) {
-		tfout << i << '\t' << Tree[i] << endl;
+		if (i == pt - 1)
+			RandNum = 0;
+		else
+			RandNum = (unsigned)rand() % (COST - 1) + 1; // 随机生成代价
+		tfout << i << '\t' << Tree[i] << '\t' << RandNum << endl;
 	}
 	tfout.close();
 	cout << "树结构输出完毕" << endl;
