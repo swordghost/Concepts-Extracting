@@ -15,11 +15,13 @@ char *path = "D:\\CEData\\"; // 数据文件夹
 int NoC, NoQ, Limit; // 叶节点数、查询数、背包容量
 int *C = NULL, *cost = NULL; // 概念引用计数数组及代价数组
 int *worth = NULL; // 价值数组
-list<int> *last; // 结果输出用辅助数组
+list<int> *last = NULL; // 结果输出用辅助数组
 
 void destroy() {
-	if (C) delete C;
-	if (cost) delete cost;
+	//if (C != NULL) delete C;
+	//if (cost != NULL) delete cost;
+	//if (worth != NULL) delete worth;
+	//if (last != NULL) delete last;
 }
 
 int main() {
