@@ -133,6 +133,22 @@ int main() {
 	qn = path + qn + "Qry.dat";
 	string tn = Num;
 	tn = path + tn + "Tre.dat";
+	string cn = Num;
+	cn = path + cn + "Con.dat";
+	string en = Num;
+	en = path + en + "Ent.dat";
+
+	// 概念输出
+	tfout.open(cn);
+	for (int i = 0; i < NoC; ++i)
+		tfout << i << "\tC" << C[i].id << endl;
+	tfout.close();
+
+	// 实体输出
+	tfout.open(en);
+	for (int i = 0; i < NoE; ++i)
+		tfout << i << "\tE" << E[i].id << endl;
+	tfout.close();
 
 	// 文档生成
 	for (int i = 0; i < NoC; ++i) {
@@ -160,10 +176,10 @@ int main() {
 	// 文档输出
 	tfout.open(dn);
 	for (int i = 0; i < NoC; ++i) {
-		tfout << 'C' << C[i].id;
+		tfout << i;
 		ECount += C[i].i;
 		for (int j = 0; j < C[i].i; ++j)
-			tfout << "\tE" << E[C[i].E[j]].id;
+			tfout << '\t' << C[i].E[j];
 		tfout << endl;
 	}
 	tfout.close();
@@ -182,7 +198,7 @@ int main() {
 		while (ReferCount < q) {
 			RandNum = (RandNum + (unsigned)(1 + (C[i].i>2 ? rand() % (C[i].i - 2) : 0))) % C[i].i;
 			if (E[C[i].E[RandNum]].check(i)) {
-				tfout << 'C' << C[i].id << "\tE" << E[C[i].E[RandNum]].id << endl;
+				tfout << i << '\t' << C[i].E[RandNum] << endl;
 				ReferCount++;
 			}
 		}
