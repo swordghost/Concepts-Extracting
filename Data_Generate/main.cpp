@@ -15,7 +15,7 @@ using namespace std;
 #define TREEUPBOUND1 3
 #define TREEUPBOUND2 10
 #define FEWNODESPRO 3
-#define COST 100
+#define COST 10
 
 int NoC, NoE, NoQ; // 总概念数、总实体数、总查询数
 char *path = "D:\\CEData\\"; // 随机数据生成文件夹

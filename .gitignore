@@ -44,10 +44,10 @@ Temporary Items
 *.tlog
 *.log
 *.obj
-Data_Generate/Debug/vc110.idb
+*.idb
 Debug/Data_Generate.exe
 *.ilk
 *.pdb
-Data_Generate/Debug/Data_Generate.lastbuildstate
 Concepts-Extracting.opensdf
-Data_Generate/Debug/Data_Generate.unsuccessfulbuild
+Debug/0-1 Pack.exe
+*.lastbuildstate
