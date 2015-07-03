@@ -9,16 +9,11 @@
 
 #include <Vector>
 
+#include "../DEFINE.h"
+
 using namespace std;
 
-#define EPCUPBOUND 50
-#define TREEUPBOUND1 3
-#define TREEUPBOUND2 10
-#define FEWNODESPRO 3
-#define COST 10
-
 int NoC, NoE, NoQ; // 总概念数、总实体数、总查询数
-char *path = "D:\\CEData\\"; // 随机数据生成文件夹
 
 class Concept{
 public:
@@ -97,18 +92,16 @@ int main() {
 	// 概念生成
 	C = new Concept[NoC];
 	RandNum = 0;
-	printf("生成概念：\n");
+	printf("生成概念...\n");
 	for (int i = 0; i < NoC; ++i)
-		printf("C%u\n", C[i].init(RandNum += (unsigned)rand() % NoC + 1));
-	printf("\n");
+		C[i].init(RandNum += (unsigned)rand() % NoC + 1);
 
 	// 实体生成
 	E = new Entity[NoE];
 	RandNum = 0;
-	printf("生成实体：\n");
+	printf("生成实体...\n");
 	for (int i = 0; i < NoE; ++i)
-		printf("E%u\n", E[i].init(RandNum += (unsigned)rand() % NoC + 1));
-	printf("\n");
+		E[i].init(RandNum += (unsigned)rand() % NoC + 1);
 
 	// 生成文档编号
 	unsigned temp = (unsigned)rand();
@@ -173,7 +166,7 @@ int main() {
 			}
 		}
 	}
-	cout << "文档生成完毕" << endl;
+	cout << "文档生成完毕..." << endl;
 
 	// 文档输出
 	tfout.open(dn);
@@ -186,7 +179,7 @@ int main() {
 		tfout << endl;
 	}
 	tfout.close();
-	cout << "文档输出完毕" << endl;
+	cout << "文档输出完毕..." << endl;
 
 	// 查询生成
 	tfout.open(qn);
@@ -208,7 +201,7 @@ int main() {
 		}
 	}
 	tfout.close();
-	cout << "查询输出完毕" << endl;
+	cout << "查询输出完毕..." << endl;
 
 	// 树结构生成
 	Tree = new int[2 * NoC];
@@ -222,9 +215,9 @@ int main() {
 	while(_v.size() != 1) {
 		cout << _v.size() << '\r';
 		if ((unsigned)rand() % FEWNODESPRO < FEWNODESPRO - 1)
-			r = min((unsigned)rand() % TREEUPBOUND1 + 2, _v.size()); // 合并TREEUPBOUND1个及以下节点
+			r = min((unsigned)rand() % (TREEUPBOUND1 - 2) + 2, _v.size()); // 合并TREEUPBOUND1个及以下节点
 		else
-			r = min((unsigned)rand() % TREEUPBOUND2 + 2, _v.size()); // 合并TREEUPBOUND2个及以下节点
+			r = min((unsigned)rand() % (TREEUPBOUND2 - 2) + 2, _v.size()); // 合并TREEUPBOUND2个及以下节点
 		for (int j = 0; j < r; ++j) {
 			RandNum = (unsigned)rand() % _v.size();
 			Tree[_v[RandNum]] = pt;
@@ -246,7 +239,7 @@ int main() {
 		tfout << i << '\t' << Tree[i] << '\t' << RandNum << endl;
 	}
 	tfout.close();
-	cout << "树结构输出完毕" << endl;
+	cout << "树结构输出完毕..." << endl;
 
 	// 清理内存
 	delete Tree;

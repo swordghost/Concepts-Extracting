@@ -5,6 +5,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Data_Generate", "Data_Gener
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0-1 Pack", "0-1 Pack\0-1 Pack.vcxproj", "{F1E92A92-B17E-4D11-BC89-97E7DF3E7FB2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ACEE66A3-DA4E-43D5-A295-AE65F0B71E3F}"
+	ProjectSection(SolutionItems) = preProject
+		DEFINE.h = DEFINE.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
