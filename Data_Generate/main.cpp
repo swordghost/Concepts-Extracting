@@ -19,21 +19,19 @@ class Concept{
 public:
 	unsigned id;
 	int E[2 * EPCUPBOUND];
-	int length, i;
-	Concept():i(0) {
+	int i, LastRefer;
+	Concept():i(0), LastRefer(-1) {
 	}
 	~Concept() {
 	}
 	unsigned init(unsigned _id) {
 		id = _id;
-		length = id % min(NoE, EPCUPBOUND);
-		if (length <= 0)
-			length = 1;
 		return id;
 	}
 	bool add(int e) {
-		if (i < 2 * EPCUPBOUND) {
+		if (LastRefer < e && i < 2 * EPCUPBOUND) {
 			E[i++] = e;
+			LastRefer = e;
 			return true;
 		}
 		return false;
@@ -146,23 +144,27 @@ int main() {
 	tfout.close();
 
 	// 文档生成
-	for (int i = 0; i < NoC; ++i) {
-		int ReferCount = 0;
-		cout << i << ':' << C[i].length << '\r';
-		while (ReferCount < C[i].length) {
-			RandNum = (RandNum + (unsigned)(1 + rand() % (NoE - 2))) % NoE;
-			if (E[RandNum].check(i)) {
-				C[i].add(RandNum);
+	for (int i = 0; i < NoE; ++i) {
+		int ReferCount = 0, len;
+		if ((unsigned)rand() % MULTIPULPRO < MULTIPULPRO - 1)
+			len = (unsigned)rand() % (MULTIPULUPB1 - MULTIPULUPB2) + MULTIPULUPB2 + 1;
+		else
+			len = (unsigned)rand() % MULTIPULUPB2 + 1;
+		cout << i << '\t' << len << '\r';
+		while (ReferCount < len) {
+			RandNum = (RandNum + (unsigned)rand() % (NoC - 1) + 1) % NoC;
+			if (C[RandNum].add(i))
 				ReferCount++;
-			}
 		}
 	}
-	for (int i = 0; i < NoE; ++i) {
-		int cnt = 0;
-		if (E[i].check(0)) {
-			while (cnt < 2) {
-				RandNum = (RandNum + (unsigned)(1 + rand() % (NoC - 2))) % NoC;
-				cnt += C[RandNum].add(i);
+	for (int i = 0; i < NoC; ++i) {
+		int ReferCount = 0;
+		if (C[i].i == 0) {
+			int len = rand() % MULTIPULUPB2 + 1;
+			while (ReferCount < len) {
+				RandNum = (RandNum + (unsigned)rand() % (NoE - 1) + 1) % NoE;
+				if (C[i].add(RandNum))
+					ReferCount++;
 			}
 		}
 	}
@@ -194,7 +196,7 @@ int main() {
 		int ReferCount = 0;
 		cout << i << ':' << q << '\r';
 		while (ReferCount < q) {
-			RandNum = (RandNum + (unsigned)(1 + (C[i].i>2 ? rand() % (C[i].i - 2) : 0))) % C[i].i;
+			RandNum = (RandNum + (unsigned)(1 + (C[i].i > 1 ? rand() % (C[i].i - 1) : 0))) % C[i].i;
 			if (E[C[i].E[RandNum]].check(i)) {
 				tfout << i << '\t' << C[i].E[RandNum] << endl;
 				ReferCount++;
@@ -216,16 +218,17 @@ int main() {
 	while(_v.size() != 1) {
 		cout << _v.size() << '\r';
 		if ((unsigned)rand() % FEWNODESPRO < FEWNODESPRO - 1)
-			r = min((unsigned)rand() % (TREEUPBOUND1 - 2) + 2, _v.size()); // 合并TREEUPBOUND1个及以下节点
+			r = min((unsigned)rand() % (TREEUPBOUND1 - 1) + 2, _v.size()); // 合并TREEUPBOUND1个及以下节点
 		else
-			r = min((unsigned)rand() % (TREEUPBOUND2 - 2) + 2, _v.size()); // 合并TREEUPBOUND2个及以下节点
+			r = min((unsigned)rand() % (TREEUPBOUND2 - 1) + 2, _v.size()); // 合并TREEUPBOUND2个及以下节点
 		for (int j = 0; j < r; ++j) {
 			RandNum = (unsigned)rand() % _v.size();
 			Tree[_v[RandNum]] = pt;
 			_v.erase(_v.begin() + RandNum);
 		}
 		_v.push_back(pt);
-		Tree[pt++] = pt - 1;
+		Tree[pt] = pt;
+		pt++;
 	}
 	_v.clear();
 
@@ -236,7 +239,7 @@ int main() {
 		if (i == pt - 1)
 			RandNum = 0;
 		else
-			RandNum = (unsigned)rand() % (COST - 1) + 1; // 随机生成代价
+			RandNum = (unsigned)rand() % COST + 1; // 随机生成代价
 		tfout << i << '\t' << Tree[i] << '\t' << RandNum << endl;
 	}
 	tfout.close();
