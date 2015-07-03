@@ -156,7 +156,7 @@ int main()
 		if (tag[i])
 			cur_wei += w[i];
 
-	srand(time(0));
+	srand((unsigned)time(0));
 
 	double T = Tstart;
 	
