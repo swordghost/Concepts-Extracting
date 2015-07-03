@@ -106,9 +106,6 @@ int main() {
 	if (tfin) {
 		getline(tfin, temp);
 		getline(tfin, temp);
-		ss.clear();
-		ss.str(temp);
-		ss >> Res;
 		getline(tfin, temp);
 		ss.clear();
 		ss.str(temp);
@@ -136,7 +133,7 @@ int main() {
 			ss.str(temp);
 			ss >> c >> e;
 			cout << c << ':' << e << '\r';
-			if (!mark[c] && check(c, e))
+			if (mark[c] || check(c, e))
 				Res++;
 		}
 	} else {
