@@ -171,6 +171,7 @@ int main() {
 	// 文档输出
 	tfout.open(dn);
 	tfout << NoC << endl;
+	tfout << NoE << endl;
 	for (int i = 0; i < NoC; ++i) {
 		tfout << i;
 		ECount += C[i].i;

@@ -45,9 +45,8 @@ Temporary Items
 *.log
 *.obj
 *.idb
-Debug/Data_Generate.exe
 *.ilk
 *.pdb
-Concepts-Extracting.opensdf
-Debug/0-1 Pack.exe
+*.opensdf
 *.lastbuildstate
+*.exe
