@@ -1,5 +1,5 @@
 ﻿// Common
-char *path = "D:\\CEData\\"; // 数据文件夹路径
+char *path = "C:\\Users\\ztc\\Documents\\GitHub\\CEData\\"; // 数据文件夹路径
 
 // Data_Generate
 #define MULTIPULPRO 5 // 实体名重现偏向系数，1 - 1 / MULTIPULPRO的概率偏向重现
