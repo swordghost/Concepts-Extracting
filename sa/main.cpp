@@ -109,7 +109,7 @@ int count(int cur)
 		return countnum[cur];
 	for (int i = 0; i < chnum[cur]; i++)
 	{
-		if (tag[i])
+		if (tag[c[cur][i]])
 			continue;
 		countnum[cur] += count(c[cur][i]);
 	}
@@ -156,7 +156,7 @@ int main()
 		if (tag[i])
 			cur_wei += w[i];
 
-	srand(time(0));
+	srand((unsigned)time(0));
 
 	double T = Tstart;
 	
