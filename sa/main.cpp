@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -90,7 +90,7 @@ void input_pck()
 {
 	ifstream fin;
 	string filename;
-	filename = string(path) + test_num + "Pck.dat";
+	filename = string(path) + test_num + "Pck.out";
 	fin.open(filename.c_str());
 	string s;
 	fin >> s;
@@ -208,7 +208,7 @@ int main()
 	}
 
 	ofstream fout;
-	string filename = string(path) + test_num + "Sa0.dat";
+	string filename = string(path) + test_num + "Sa0.out";
 	fout.open(filename);
 	fout << 0 << endl;
 	fout << 0 << endl;
@@ -269,7 +269,7 @@ int main()
 		T = T * alpha;
 	}
 
-	filename = string(path) + test_num + "Sa1.dat";
+	filename = string(path) + test_num + "Sa1.out";
 	fout.open(filename);
 	fout << 0 << endl;
 	fout << 0 << endl;

@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -64,7 +64,7 @@ void input_rst()
 {
 	ifstream fin;
 	string filename;
-	filename = string(path) + test_num + TestName + ".dat";
+	filename = string(path) + test_num + TestName + ".out";
 	fin.open(filename.c_str());
 	string s;
 	fin >> s;
@@ -131,6 +131,12 @@ void get_list(int fa,int cur)
 
 int main()
 {
+	cout << "输入Pck或Sa0或Sa1" << endl;
+	getline(cin, TestName);
+	if (TestName != "Pck" && TestName != "Sa0" && TestName != "Sa1") {
+		cout << "结果指定错误！\n";
+		exit(1);
+	}
 	srand((unsigned)time(0));
 	getline(cin, test_num);
 	input_doc();
