@@ -50,3 +50,5 @@ Temporary Items
 *.opensdf
 *.lastbuildstate
 *.exe
+*.sdf
+*.suo
