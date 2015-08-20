@@ -19,7 +19,7 @@ int w[2000] = {};
 int f[2000] = {};
 int chnum[2000] = {};
 int c[2000][2000] = {};
-bool tag[2000], best_tag[2000];
+bool tag[2000] = {}, best_tag[2000];
 int countnum[2000];
 double Tmin = 0.0001;
 double Tstart = 200;
@@ -144,7 +144,7 @@ int main()
 	input_doc();
 	input_qry();
 	input_tre();
-	input_pck();
+	//input_pck();
 
 	int val_num = leaf_num;
 

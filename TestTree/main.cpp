@@ -9,7 +9,7 @@
 
 using namespace std;
 
-string TestName = "Pck";
+string TestName;
 string test_num;
 int leaf_num,ent_num,node_num,qry_num;
 int ent[2000][500];
@@ -98,7 +98,7 @@ void input_qry()
 				if (ent[con][k] == y)
 					tmp.push_back(con);
 		}
-		int times = min((int)tmp.size(),3);
+		int times = min((int)tmp.size(),2);
 		bool flag = false;
 		for (int j = 0; j < times; j++)
 		{
@@ -139,6 +139,7 @@ int main()
 	}
 	srand((unsigned)time(0));
 	getline(cin, test_num);
+	cin >> TestName;
 	input_doc();
 	input_tre();
 	input_rst();
